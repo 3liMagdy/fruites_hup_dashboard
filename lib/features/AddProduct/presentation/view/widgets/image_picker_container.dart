@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import '../../../../core/utils/app_colors.dart';
+import 'package:fruits_hub_dashboard/core/utils/app_colors.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImagePickerContainer extends StatefulWidget {

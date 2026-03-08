@@ -1,7 +1,7 @@
 
-import 'package:flutter/material.dart';
+
 import 'package:go_router/go_router.dart';
-import 'package:fruits_hub_dashboard/features/dashboard_views/add_product_view.dart';
+import 'package:fruits_hub_dashboard/features/AddProduct/presentation/view/add_product_view.dart';
 import 'package:fruits_hub_dashboard/features/dashboard/presentation/view/dashbordview.dart';
 
 class AppRouter {

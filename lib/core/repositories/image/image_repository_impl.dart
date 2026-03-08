@@ -2,19 +2,22 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import '../../errors/exceptions.dart';
 import '../../errors/failures.dart';
-import '../../services/storage_service.dart';
+import '../../services/storage_service_images.dart';
 import 'image_repository.dart';
+import 'package:path/path.dart' as path;
+import '../../utils/app_constant.dart';
 
 class ImageRepositoryImpl implements ImageRepository {
-  final StorageService storageService;
+  final StorageServiceImages storageService;
 
   ImageRepositoryImpl(this.storageService);
 
-  String _generateImagePath(File image) {
-    final fileName = image.path.split('/').last;
-    final timestamp = DateTime.now().millisecondsSinceEpoch;
-    return 'images/${timestamp}_$fileName';
-  }
+String _generateImagePath(File image) {
+  final fileName = path.basename(image.path);
+  final timestamp = DateTime.now().millisecondsSinceEpoch;
+
+  return 'products/${timestamp}_$fileName';
+}
 
   @override
   Future<Either<Failure, String>> uploadImage(File image) async {
