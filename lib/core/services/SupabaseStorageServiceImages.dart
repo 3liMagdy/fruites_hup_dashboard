@@ -28,13 +28,10 @@ class SupabaseStorageServiceImages implements StorageServiceImages {
 
     final imageUrl =
         client.storage.from(EndPoients.imagesBucket).getPublicUrl(path);
-
-    print("Image uploaded successfully: $imageUrl");
-
     return imageUrl;
 
   } catch (e) {
-    print("Upload error: $e");
+   
     throw CustomException(message: e.toString());
   }
 }

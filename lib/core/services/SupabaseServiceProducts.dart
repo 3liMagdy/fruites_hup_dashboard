@@ -1,4 +1,5 @@
 
+import 'package:fruits_hub_dashboard/core/errors/exceptions.dart';
 import 'package:fruits_hub_dashboard/core/utils/app_constant.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'storage_service_Products.dart';
@@ -10,11 +11,24 @@ class SupabaseServiceProducts implements StorageServiceProducts {
   SupabaseServiceProducts(this.client);
 
   @override
-  Future<void> addData(String table, Map<String, dynamic> data) async {
-    await client
+ Future<void> addData(String table, Map<String, dynamic> data) async {
+  try {
+
+    print("TABLE: $table");
+    print("DATA: $data");
+
+    final res = await client
         .from(table)
-        .insert(data);
+        .insert(data)
+        .select();
+
+    print("INSERT SUCCESS: $res");
+
+  } catch (e) {
+    print("SUPABASE ERROR: $e");
+    throw CustomException(message: e.toString());
   }
+}
 
   @override
   Future<void> updateData(String documentId, Map<String, dynamic> data) async {

@@ -20,12 +20,15 @@ class AddProductViewBody extends StatefulWidget {
 
 class _AddProductViewBodyState extends State<AddProductViewBody> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  
+
   final TextEditingController nameController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController codeController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-  
+  final TextEditingController expirationController = TextEditingController();
+  final TextEditingController caloriesController = TextEditingController();
+  final TextEditingController unitAmountController = TextEditingController();
+
   bool isFeaturedItem = false;
   File? image;
 
@@ -50,7 +53,13 @@ class _AddProductViewBodyState extends State<AddProductViewBody> {
         code: codeController.text,
         description: descriptionController.text,
         isFeatured: isFeaturedItem,
-        imageUrl: '', // Will be updated by Cubit
+        imageUrl: '',
+        reviews: [],
+        expirationsMonths: int.parse(expirationController.text),
+        numberOfCalories: int.parse(caloriesController.text),
+        unitAmount: int.parse(
+          unitAmountController.text,
+        ), // Will be updated by Cubit
       );
       context.read<AddProductCubit>().addProduct(product, image!);
     }
@@ -103,6 +112,23 @@ class _AddProductViewBodyState extends State<AddProductViewBody> {
                         controller: descriptionController,
                       ),
                       const SizedBox(height: 16),
+                      CustomTextField(
+                        hintText: "Expiration Months",
+                        controller: expirationController,
+                        textInputType: TextInputType.number,
+                      ),
+                      const SizedBox(height: 16),
+                      CustomTextField(
+                        hintText: "Calories",
+                        controller: caloriesController,
+                        textInputType: TextInputType.number,
+                      ),
+                      const SizedBox(height: 16),
+                      CustomTextField(
+                        hintText: "Unit Amount",
+                        controller: unitAmountController,
+                        textInputType: TextInputType.number,
+                      ),
                       Row(
                         children: [
                           Checkbox(
@@ -138,7 +164,9 @@ class _AddProductViewBodyState extends State<AddProductViewBody> {
                               borderRadius: BorderRadius.circular(16),
                             ),
                           ),
-                          onPressed: state is AddProductLoading ? null : createProduct,
+                          onPressed: state is AddProductLoading
+                              ? null
+                              : createProduct,
                           child: Text(
                             AppStrings.addProduct,
                             style: CustomTextStyles.Cairo700style16,
@@ -152,9 +180,7 @@ class _AddProductViewBodyState extends State<AddProductViewBody> {
               ),
             ),
             if (state is AddProductLoading)
-              const Center(
-                child: CircularProgressIndicator(),
-              ),
+              const Center(child: CircularProgressIndicator()),
           ],
         );
       },

@@ -12,7 +12,7 @@ class EndPoients {
   static const imagesBucket = "images";
 
   /// Tables
-  static const productsTable = "products";
+  static const productsTable = 'products';
 
   /// Storage folders
   static const productsFolder = "products";

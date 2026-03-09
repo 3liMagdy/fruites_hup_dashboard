@@ -27,12 +27,22 @@ class AddProductCubit extends Cubit<AddProductState> {
           description: product.description,
           isFeatured: product.isFeatured,
           imageUrl: imageUrl,
+           reviews: product.reviews,
+            expirationsMonths: product.expirationsMonths,
+             numberOfCalories: product.numberOfCalories,
+              unitAmount: product.unitAmount,
+              isOrganic: product.isOrganic,
         );
 
         final productResult = await productRepository.addProduct(productWithImage);
 
         productResult.fold(
-          (failure) => emit(AddProductFailure(failure.errMessage)),
+         (failure) async {
+
+    await imageRepository.deleteImage(imageUrl);
+
+    emit(AddProductFailure(failure.errMessage));
+  },
           (unit) => emit(AddProductSuccess()),
         );
       },
